@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Contact
+from .models import Contact,Order
 
 class ContactAdmin(admin.ModelAdmin):
   list_display = ('id', 'name', 'listing', 'email', 'contact_date')
@@ -8,4 +8,5 @@ class ContactAdmin(admin.ModelAdmin):
   search_fields = ('name', 'email', 'listing')
   list_per_page = 25
 
-admin.site.register(Contact, ContactAdmin)
+admin.site.register(Contact)
+admin.site.register(Order)

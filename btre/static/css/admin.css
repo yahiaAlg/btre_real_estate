@@ -1,6 +1,6 @@
 #header {
   height: 50px;
-  background: #10284e;
+  background: #2aaf8b;
   color: #fff;
 }
 
@@ -10,7 +10,7 @@
 
 a:link,
 a:visited {
-  color:#10284e;
+  color:#e4e8f0;
 }
 
 div.breadcrumbs {

@@ -62,6 +62,34 @@
           {% else %}
             <p>You have not made any inquiries</p>
           {% endif %}
+
+
+          <!-- orders -->
+          {% if orders %}
+            <p>Here are the property listings that you have ordered about</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Property</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in orders %}
+                  <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.listing }}</td>
+                    <td>
+                      <a class="btn btn-light" href="{% url 'listing' order.listing.id %}">View Listing</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p>You have not made any orders</p>
+          {% endif %}
         </div>
       </div>
     </div>

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
-from .models import Contact
+
+from listings.models import Listing
+from .models import Contact, Order
 
 def contact(request):
   if request.method == 'POST':
@@ -34,6 +36,29 @@ def contact(request):
     #   [realtor_email, 'techguyinfo@gmail.com'],
     #   fail_silently=False
     # )
+
+    messages.success(request, 'Your request has been submitted, a realtor will get back to you soon')
+    return redirect('/listings/'+listing_id)
+
+def order(request):
+  if request.method == 'POST':
+    listing_id = request.POST['listing_id']
+    listing = Listing.objects.get(id=listing_id)
+    #  Check if user has made inquiry already
+    if request.user.is_authenticated:
+
+      has_contacted = Order.objects.all().filter(listing_id=listing_id, customer=request.user)
+      if has_contacted:
+        messages.error(request, 'You have already made an inquiry for this listing')
+        return redirect('/listings/'+listing_id)
+
+      else:
+        new_order = Order(listing=listing, customer=request.user, email=request.user.email)
+        new_order.save()
+        messages.success(request, "Order saved successfully!")
+        return redirect("dashboard")
+
+
 
     messages.success(request, 'Your request has been submitted, a realtor will get back to you soon')
     return redirect('/listings/'+listing_id)
